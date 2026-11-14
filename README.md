@@ -89,7 +89,7 @@ laboratorio 12/
 │   ├── resources/views/mantenimiento.blade.php
 │   ├── resources/views/pedidos.blade.php
 │   └── routes/web.php
-└── sistema-spatie/       
+└── sistema-spatie/        <- proyecto Laravel 12 de las Actividades 2 y 3 (Spatie)
     ├── bootstrap/app.php
     ├── app/Models/User.php
     ├── app/Models/Note.php
@@ -129,8 +129,16 @@ php artisan ui bootstrap --auth
 npm install && npm run build
 ```
 
+**Actividad 1: creación del proyecto Laravel**
+
 ![Actividad 1: creación del proyecto Laravel](capturas/act1_01_composer-create-project.png)
+
+**Actividad 1: configuración del .env**
+
 ![Actividad 1: configuración del .env](capturas/act1_02_env.png)
+
+**Actividad 1: php artisan ui bootstrap --auth**
+
 ![Actividad 1: php artisan ui bootstrap --auth](capturas/act1_03_ui-auth.png)
 
 **Columna `role`.** Se agregó la columna `role` a la tabla `users` mediante una migración: tipo entero, después de `password` y con valor predeterminado 1.
@@ -265,7 +273,12 @@ class AppServiceProvider extends ServiceProvider
 
 **Controlador y vistas.** `HomeController` muestra el panel principal. Se crearon las vistas `mantenimiento.blade.php` y `pedidos.blade.php`, que por ahora solo tienen un mensaje informativo:
 
+**Actividad 1: HomeController**
+
 ![Actividad 1: HomeController](capturas/act1_07_controller.png)
+
+**Actividad 1: vistas mantenimiento y pedidos**
+
 ![Actividad 1: vistas mantenimiento y pedidos](capturas/act1_08_vistas.png)
 
 <details><summary>Ver código: <code>app/Http/Controllers/HomeController.php</code></summary>
@@ -539,7 +552,12 @@ php artisan ui bootstrap --auth
 composer require spatie/laravel-permission
 ```
 
+**Actividad 2: creación del proyecto sistema-spatie**
+
 ![Actividad 2: creación del proyecto sistema-spatie](capturas/act2_01_composer-create-project.png)
+
+**Actividad 2: instalación de spatie/laravel-permission**
+
 ![Actividad 2: instalación de spatie/laravel-permission](capturas/act2_02_composer-require-spatie.png)
 
 La guía pide registrar `Spatie\Permission\PermissionServiceProvider::class` en `config/app.php`. En Laravel 12 ese paso **no es necesario**, porque el paquete se registra automáticamente.
@@ -551,7 +569,12 @@ php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvid
 php artisan migrate
 ```
 
+**Actividad 2: vendor:publish del paquete**
+
 ![Actividad 2: vendor:publish del paquete](capturas/act2_03_vendor-publish.png)
+
+**Actividad 2: config/permission.php**
+
 ![Actividad 2: config/permission.php](capturas/act2_04_config-permission.png)
 
 `config/permission.php` define los modelos `Role` y `Permission` y los nombres de las tablas. La migración creó **5 tablas** junto a las demás de Laravel:
@@ -564,7 +587,12 @@ php artisan migrate
 | `model_has_roles` | Qué roles tiene cada usuario |
 | `model_has_permissions` | Permisos asignados directamente a un usuario |
 
+**Actividad 2: php artisan migrate**
+
 ![Actividad 2: php artisan migrate](capturas/act2_05_migrate.png)
+
+**Actividad 2: tablas de Spatie en phpMyAdmin**
+
 ![Actividad 2: tablas de Spatie en phpMyAdmin](capturas/act2_06_tablas-spatie.png)
 
 ---
@@ -765,7 +793,12 @@ class DatabaseSeeder extends Seeder
 
 **Controlador y vista de notas.** `NotesController` tiene el método `index`, que lista las notas, y `destroy`, que elimina una. En la vista, la directiva `@can('destroy_notes')` muestra el botón **Eliminar nota** solo a quien tiene el permiso; los demás ven un mensaje:
 
+**Actividad 3: NotesController**
+
 ![Actividad 3: NotesController](capturas/act3_05_notes-controller.png)
+
+**Actividad 3: vista notes/index.blade.php**
+
 ![Actividad 3: vista notes/index.blade.php](capturas/act3_06_notes-view.png)
 
 <details><summary>Ver código: <code>app/Http/Controllers/NotesController.php</code></summary>
@@ -986,7 +1019,12 @@ Al entrar con `cliente@example.com` (**role 2, cliente**), el menú muestra solo
 
 Con el administrador, la opción Mantenimiento abre su sección; con el cliente, la opción Pedidos abre la suya.
 
+**Gates - Sección Mantenimiento (administrador)**
+
 ![Gates - Sección Mantenimiento (administrador)](capturas/act1_16_seccion-mantenimiento.png)
+
+**Gates - Sección Pedidos (cliente)**
+
 ![Gates - Sección Pedidos (cliente)](capturas/act1_17_seccion-pedidos.png)
 
 Como ocultar el enlace no basta, se probó la ruta directamente: con la sesión del cliente se escribió `http://127.0.0.1:8000/mantenimiento` en la barra de direcciones. Gracias a `Gate::authorize('mantenimiento')`, la aplicación responde con el error **403** en lugar de mostrar la vista.
@@ -995,7 +1033,12 @@ Como ocultar el enlace no basta, se probó la ruta directamente: con la sesión 
 
 **Base de datos y registro.** La tabla `users` de la base `sistema` tiene la columna `role` (entero, valor predeterminado 1), y el formulario `/register` crea usuarios nuevos con ese rol.
 
+**sistema - Estructura de users con la columna role**
+
 ![sistema - Estructura de users con la columna role](capturas/act1_23_users-estructura.png)
+
+**sistema - Formulario de registro**
+
 ![sistema - Formulario de registro](capturas/act1_24_register.png)
 
 ### 7.2 Actividad 2: instalación de Spatie
@@ -1015,7 +1058,12 @@ Pruebas realizadas en el proyecto `sistema-spatie`:
 
 **Usuario con el permiso.** Al entrar con `admin@styde.net` (rol Administrator) y abrir `/notes`, se muestra el botón **Eliminar nota**.
 
+**Spatie - Inicio de sesión del administrador**
+
 ![Spatie - Inicio de sesión del administrador](capturas/act3_09_login-admin.png)
+
+**Spatie - /notes con el administrador (botón Eliminar nota)**
+
 ![Spatie - /notes con el administrador (botón Eliminar nota)](capturas/act3_10_notes-admin.png)
 
 **Usuario sin rol ni permisos.** Al entrar con `joe@example.com` y abrir `/notes`, aparece el mensaje «Usted no puede eliminar esta nota».
@@ -1032,7 +1080,12 @@ Pruebas realizadas en el proyecto `sistema-spatie`:
 
 **Roles `cliente` y `empleado`.** En `/tienda`, el usuario `cliente@example.com` ve el texto «Eres un cliente»; el usuario `empleado@example.com` ve el botón **Validar venta**, porque su rol tiene el permiso `validar_venta`.
 
+**Spatie - /tienda con el cliente**
+
 ![Spatie - /tienda con el cliente](capturas/act3_14_tienda-cliente.png)
+
+**Spatie - /tienda con el empleado**
+
 ![Spatie - /tienda con el empleado](capturas/act3_15_tienda-empleado.png)
 
 La ruta `/tienda/cliente` solo permite el acceso al rol `cliente`; con cualquier otro rol responde con un error **403**.
@@ -1041,8 +1094,16 @@ La ruta `/tienda/cliente` solo permite el acceso al rol `cliente`; con cualquier
 
 **Evidencia en la base de datos `sistema_spatie`.** Los datos que crea el seeder: los roles Administrator, cliente y empleado; los permisos `destroy_notes` y `validar_venta`; y la tabla `model_has_roles`, que indica qué rol tiene cada usuario.
 
+**sistema_spatie - Tabla roles**
+
 ![sistema_spatie - Tabla roles](capturas/act3_17_tabla-roles.png)
+
+**sistema_spatie - Tabla permissions**
+
 ![sistema_spatie - Tabla permissions](capturas/act3_18_tabla-permissions.png)
+
+**sistema_spatie - Tabla model_has_roles**
+
 ![sistema_spatie - Tabla model_has_roles](capturas/act3_20_model-has-roles.png)
 
 
