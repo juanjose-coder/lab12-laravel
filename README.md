@@ -129,23 +129,9 @@ php artisan ui bootstrap --auth
 npm install && npm run build
 ```
 
-**Actividad 1: creación del proyecto Laravel**
-
-![Actividad 1: creación del proyecto Laravel](capturas/act1_01_composer-create-project.png)
-
-**Actividad 1: configuración del .env**
-
-![Actividad 1: configuración del .env](capturas/act1_02_env.png)
-
-**Actividad 1: php artisan ui bootstrap --auth**
-
-![Actividad 1: php artisan ui bootstrap --auth](capturas/act1_03_ui-auth.png)
-
 **Columna `role`.** Se agregó la columna `role` a la tabla `users` mediante una migración: tipo entero, después de `password` y con valor predeterminado 1.
 
-![Actividad 1: migración de la columna role](capturas/act1_04_migracion-role.png)
-
-<details><summary>Ver código: <code>database/migrations/..._add_role_to_users_table.php</code></summary>
+**Código: `database/migrations/..._add_role_to_users_table.php`**
 
 ```php
 <?php
@@ -177,13 +163,9 @@ return new class extends Migration
 };
 ```
 
-</details>
-
 **Constantes de rol en el modelo.** Los Gates hacen referencia a las constantes `ROLE_ADMINISTRADOR` y `ROLE_CLIENTE`, que se definieron en `app/Models/User.php`. Además se agregó `role` al arreglo `$fillable`:
 
-![Actividad 1: modelo User con las constantes de rol](capturas/act1_05_user-model.png)
-
-<details><summary>Ver código: <code>app/Models/User.php</code></summary>
+**Código: `app/Models/User.php`**
 
 ```php
 <?php
@@ -227,13 +209,9 @@ class User extends Authenticatable
 }
 ```
 
-</details>
-
 **Definición de los permisos (Gates).** Se crearon las dos acciones: `mantenimiento`, que solo autoriza al rol administrador, y `pedidos`, que solo autoriza al rol cliente. En Laravel 12 se definen en el método `boot()` de `AppServiceProvider` (en versiones anteriores, en `AuthServiceProvider`):
 
-![Actividad 1: Gates en AppServiceProvider](capturas/act1_06_gates.png)
-
-<details><summary>Ver código: <code>app/Providers/AppServiceProvider.php</code></summary>
+**Código: `app/Providers/AppServiceProvider.php`**
 
 ```php
 <?php
@@ -269,19 +247,9 @@ class AppServiceProvider extends ServiceProvider
 }
 ```
 
-</details>
-
 **Controlador y vistas.** `HomeController` muestra el panel principal. Se crearon las vistas `mantenimiento.blade.php` y `pedidos.blade.php`, que por ahora solo tienen un mensaje informativo:
 
-**Actividad 1: HomeController**
-
-![Actividad 1: HomeController](capturas/act1_07_controller.png)
-
-**Actividad 1: vistas mantenimiento y pedidos**
-
-![Actividad 1: vistas mantenimiento y pedidos](capturas/act1_08_vistas.png)
-
-<details><summary>Ver código: <code>app/Http/Controllers/HomeController.php</code></summary>
+**Código: `app/Http/Controllers/HomeController.php`**
 
 ```php
 <?php
@@ -300,8 +268,7 @@ class HomeController extends Controller
 }
 ```
 
-</details>
-<details><summary>Ver código: <code>resources/views/mantenimiento.blade.php</code></summary>
+**Código: `resources/views/mantenimiento.blade.php`**
 
 ```html
 @extends('layouts.app')
@@ -323,8 +290,7 @@ class HomeController extends Controller
 @endsection
 ```
 
-</details>
-<details><summary>Ver código: <code>resources/views/pedidos.blade.php</code></summary>
+**Código: `resources/views/pedidos.blade.php`**
 
 ```html
 @extends('layouts.app')
@@ -346,13 +312,9 @@ class HomeController extends Controller
 @endsection
 ```
 
-</details>
-
 **Integración en el menú.** En `resources/views/layouts/app.blade.php` se usó la directiva `@can ... @endcan`, que evalúa los Gates definidos y muestra cada opción solo al usuario autorizado:
 
-![Actividad 1: menú con @can en app.blade.php](capturas/act1_09_menu-can.png)
-
-<details><summary>Ver código: <code>resources/views/layouts/app.blade.php</code></summary>
+**Código: `resources/views/layouts/app.blade.php`**
 
 ```html
 <!doctype html>
@@ -444,13 +406,9 @@ class HomeController extends Controller
 </html>
 ```
 
-</details>
-
 **Protección de las rutas.** Con solo el `@can` en el menú, un usuario puede escribir `/mantenimiento` o `/pedidos` en la barra de direcciones y entrar igual. Para evitarlo, cada ruta valida el permiso con `Gate::authorize()`, que responde con un error **403** si el usuario no está autorizado:
 
-![Actividad 1: routes/web.php con Gate::authorize](capturas/act1_10_routes-web.png)
-
-<details><summary>Ver código: <code>routes/web.php</code></summary>
+**Código: `routes/web.php`**
 
 ```php
 <?php
@@ -488,8 +446,6 @@ Route::middleware('auth')->group(function () {
 });
 ```
 
-</details>
-
 **Usuarios de prueba y ejecución.** El seeder crea un usuario por cada rol. Luego se ejecutaron las migraciones y se levantó el servidor:
 
 ```bash
@@ -497,9 +453,7 @@ php artisan migrate --seed
 php artisan serve        # http://127.0.0.1:8000
 ```
 
-![Actividad 1: php artisan migrate --seed](capturas/act1_11_migrate-seed.png)
-
-<details><summary>Ver código: <code>database/seeders/DatabaseSeeder.php</code></summary>
+**Código: `database/seeders/DatabaseSeeder.php`**
 
 ```php
 <?php
@@ -534,9 +488,6 @@ class DatabaseSeeder extends Seeder
 }
 ```
 
-</details>
-![Actividad 1: tabla users con la columna role en phpMyAdmin](capturas/act1_12_phpmyadmin-users.png)
-
 ---
 
 ### 6.2 Actividad 2: instalación de Spatie laravel-permission
@@ -552,14 +503,6 @@ php artisan ui bootstrap --auth
 composer require spatie/laravel-permission
 ```
 
-**Actividad 2: creación del proyecto sistema-spatie**
-
-![Actividad 2: creación del proyecto sistema-spatie](capturas/act2_01_composer-create-project.png)
-
-**Actividad 2: instalación de spatie/laravel-permission**
-
-![Actividad 2: instalación de spatie/laravel-permission](capturas/act2_02_composer-require-spatie.png)
-
 La guía pide registrar `Spatie\Permission\PermissionServiceProvider::class` en `config/app.php`. En Laravel 12 ese paso **no es necesario**, porque el paquete se registra automáticamente.
 
 Después se publicaron el archivo de configuración (`config/permission.php`) y la migración que crea las tablas del paquete:
@@ -568,14 +511,6 @@ Después se publicaron el archivo de configuración (`config/permission.php`) y 
 php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
 php artisan migrate
 ```
-
-**Actividad 2: vendor:publish del paquete**
-
-![Actividad 2: vendor:publish del paquete](capturas/act2_03_vendor-publish.png)
-
-**Actividad 2: config/permission.php**
-
-![Actividad 2: config/permission.php](capturas/act2_04_config-permission.png)
 
 `config/permission.php` define los modelos `Role` y `Permission` y los nombres de las tablas. La migración creó **5 tablas** junto a las demás de Laravel:
 
@@ -587,14 +522,6 @@ php artisan migrate
 | `model_has_roles` | Qué roles tiene cada usuario |
 | `model_has_permissions` | Permisos asignados directamente a un usuario |
 
-**Actividad 2: php artisan migrate**
-
-![Actividad 2: php artisan migrate](capturas/act2_05_migrate.png)
-
-**Actividad 2: tablas de Spatie en phpMyAdmin**
-
-![Actividad 2: tablas de Spatie en phpMyAdmin](capturas/act2_06_tablas-spatie.png)
-
 ---
 
 ### 6.3 Actividad 3: uso del paquete (notas, rol Administrator y permiso `destroy_notes`)
@@ -603,9 +530,7 @@ Se implementó un ejemplo donde solo el rol **Administrator** puede eliminar not
 
 **Modelo y migración `Note`.** La guía crea el modelo con `php artisan make:model Note -m` y completa el método `up()` de la migración:
 
-![Actividad 3: php artisan make:model Note -m](capturas/act3_01_make-model-note.png)
-
-<details><summary>Ver código: <code>database/migrations/..._create_notes_table.php</code></summary>
+**Código: `database/migrations/..._create_notes_table.php`**
 
 ```php
 <?php
@@ -633,8 +558,7 @@ return new class extends Migration
 };
 ```
 
-</details>
-<details><summary>Ver código: <code>app/Models/Note.php</code></summary>
+**Código: `app/Models/Note.php`**
 
 ```php
 <?php
@@ -650,13 +574,9 @@ class Note extends Model
 }
 ```
 
-</details>
-
 **Trait `HasRoles` en el modelo `User`.** Agrega al usuario los métodos para trabajar con roles y permisos (`assignRole`, `hasRole`, `hasPermissionTo`, `can`...):
 
-![Actividad 3: modelo User con el trait HasRoles](capturas/act3_02_user-hasroles.png)
-
-<details><summary>Ver código: <code>app/Models/User.php</code></summary>
+**Código: `app/Models/User.php`**
 
 ```php
 <?php
@@ -694,8 +614,6 @@ class User extends Authenticatable
 }
 ```
 
-</details>
-
 **Creación del rol, el permiso y los usuarios.** La guía lo hace en la consola interactiva `php artisan tinker`:
 
 ```php
@@ -711,13 +629,9 @@ $user = User::create(['name' => 'Styde', 'email' => 'admin@styde.net', 'password
 $user->assignRole('Administrator');                           // el usuario recibe el rol
 ```
 
-![Actividad 3: creación del rol y permiso en Tinker](capturas/act3_03_tinker.png)
-
 Para poder repetir la prueba, esos mismos pasos se dejaron en el `DatabaseSeeder` (con `firstOrCreate`, de modo que se puede ejecutar más de una vez). Además crea un usuario **sin rol** (Joe), el rol `cliente` y el rol `empleado` con el permiso `validar_venta`, que se usan en la parte final de la guía:
 
-![Actividad 3: DatabaseSeeder con roles, permisos y usuarios](capturas/act3_04_seeder.png)
-
-<details><summary>Ver código: <code>database/seeders/DatabaseSeeder.php</code></summary>
+**Código: `database/seeders/DatabaseSeeder.php`**
 
 ```php
 <?php
@@ -789,19 +703,9 @@ class DatabaseSeeder extends Seeder
 }
 ```
 
-</details>
-
 **Controlador y vista de notas.** `NotesController` tiene el método `index`, que lista las notas, y `destroy`, que elimina una. En la vista, la directiva `@can('destroy_notes')` muestra el botón **Eliminar nota** solo a quien tiene el permiso; los demás ven un mensaje:
 
-**Actividad 3: NotesController**
-
-![Actividad 3: NotesController](capturas/act3_05_notes-controller.png)
-
-**Actividad 3: vista notes/index.blade.php**
-
-![Actividad 3: vista notes/index.blade.php](capturas/act3_06_notes-view.png)
-
-<details><summary>Ver código: <code>app/Http/Controllers/NotesController.php</code></summary>
+**Código: `app/Http/Controllers/NotesController.php`**
 
 ```php
 <?php
@@ -836,8 +740,7 @@ class NotesController extends Controller
 }
 ```
 
-</details>
-<details><summary>Ver código: <code>resources/views/notes/index.blade.php</code></summary>
+**Código: `resources/views/notes/index.blade.php`**
 
 ```html
 @extends('layouts.app')
@@ -879,13 +782,9 @@ class NotesController extends Controller
 @endsection
 ```
 
-</details>
-
 **Registro del middleware.** La guía crea un `PermissionMiddleware` propio y lo registra en `Kernel.php`. En Laravel 12 no existe el Kernel y Spatie ya trae sus middleware, por lo que basta con registrar los alias en `bootstrap/app.php`:
 
-![Actividad 3: alias de middleware en bootstrap/app.php](capturas/act3_07_bootstrap-app.png)
-
-<details><summary>Ver código: <code>bootstrap/app.php</code></summary>
+**Código: `bootstrap/app.php`**
 
 ```php
 <?php
@@ -913,13 +812,9 @@ return Application::configure(basePath: dirname(__DIR__))
     })->create();
 ```
 
-</details>
-
 **Rutas protegidas.** Sin protección, un usuario sin el permiso podría entrar a la ruta de eliminar escribiendo la URL aunque no vea el botón. Por eso la ruta de eliminar está dentro de un grupo con el middleware `permission:destroy_notes`: quien no tiene el permiso recibe un error **403**. También se protegió una ruta con el middleware `role:cliente`, y la vista `/tienda` comprueba el rol con `hasRole()` y el permiso con `hasPermissionTo()`:
 
-![Actividad 3: routes/web.php](capturas/act3_08_routes-web.png)
-
-<details><summary>Ver código: <code>routes/web.php</code></summary>
+**Código: `routes/web.php`**
 
 ```php
 <?php
@@ -963,8 +858,7 @@ Route::get('/tienda', function () {
 })->middleware('auth')->name('tienda');
 ```
 
-</details>
-<details><summary>Ver código: <code>resources/views/tienda.blade.php</code></summary>
+**Código: `resources/views/tienda.blade.php`**
 
 ```html
 @extends('layouts.app')
@@ -985,8 +879,6 @@ Route::get('/tienda', function () {
 </div>
 @endsection
 ```
-
-</details>
 
 **Métodos útiles del paquete** (según la guía):
 
@@ -1105,8 +997,6 @@ La ruta `/tienda/cliente` solo permite el acceso al rol `cliente`; con cualquier
 **sistema_spatie - Tabla model_has_roles**
 
 ![sistema_spatie - Tabla model_has_roles](capturas/act3_20_model-has-roles.png)
-
-
 
 ## 8. Conclusiones
 
