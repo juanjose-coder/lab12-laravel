@@ -899,7 +899,7 @@ Se construyeron dos proyectos: `sistema` (Actividad 1, Gates, base de datos `sis
 
 Se abre `/login` del proyecto `sistema` y se ingresan el correo y la contraseña de uno de los dos usuarios creados por el seeder.
 
-![Gates - Inicio de sesión](capturas/act1_13_login.png)
+![Gates - Inicio de sesión](capturas/capturasact1_13_login.png)
 
 Al entrar con `admin@example.com` (**role 1, administrador**), el menú muestra solo la opción **Mantenimiento**, porque el `@can('mantenimiento')` del layout es el único que se cumple.
 
@@ -937,7 +937,7 @@ Como ocultar el enlace no basta, se probó la ruta directamente: con la sesión 
 
 Con el paquete instalado y las migraciones ejecutadas en el proyecto `sistema-spatie`, phpMyAdmin muestra las 5 tablas creadas por Spatie en la base `sistema_spatie`. Las Actividades 2 y 3 usan este mismo proyecto y esta misma base de datos.
 
-![Spatie - Tablas del paquete en phpMyAdmin](capturas/act2_07_phpmyadmin-tablas.png)
+![Spatie - Tablas del paquete en phpMyAdmin](capturas/capturasact2_07_phpmyadmin-tablas.png)
 
 ### 7.3 Actividad 3: roles y permisos con Spatie
 
@@ -964,7 +964,7 @@ Pruebas realizadas en el proyecto `sistema-spatie`:
 
 **Protección de la ruta.** Joe intenta eliminar la nota sin tener el permiso (enviando la solicitud DELETE a `/notes/1` desde la terminal): el middleware `permission:destroy_notes` responde con un error **403 Forbidden** y la nota no se elimina.
 
-![Spatie - Error 403 sin el permiso destroy_notes](capturas/act3_12_error-403.png)
+![Spatie - Error 403 sin el permiso destroy_notes](capturas/capturasact3_12_error-403.png)
 
 **Eliminación con permiso.** Con el administrador, al pulsar **Eliminar nota** la nota se borra y se regresa a la lista.
 
